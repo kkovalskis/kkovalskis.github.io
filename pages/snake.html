@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Game</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="body">
+   <h1 style="text-align: center;">Snake Game</h1>
+    <p style="text-align: center;">Press "W" "A" "S" "D" keys on your keyboard to control a snake.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+    <canvas id="myCanvas">Jo</canvas>
+    </main>
+    <div class="projects">
+       <div class="subprojects">
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+        </div>
+   </div>
+<script>
+    //for buttons
+    var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+    
+    //program
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    var wid = 800;
+    var hei = 600;
+    canvas.width = wid;
+    canvas.height = hei;
+    var w = 10;
+    var h = 10;
+    var blocks = 1;
+    var parts = [];
+    var directionx = 10;
+    var directiony = 0;
+
+    var squareProp = function() {
+        this.x = 200 - 10 * blocks;
+        this.y = 100;
+        this.speedx = 5;
+        this.speedy = 0;
+        this.color = 'black';
+    };
+
+    var Apple = function() {
+        this.x = Math.round((Math.floor(Math.random() * (wid - 10))) / 10) * 10;
+        this.y = Math.round((Math.floor(Math.random() * (hei - 10))) / 10) * 10;
+        this.color = 'green';
+    };
+
+    Apple.prototype.draw = function() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, w, h);
+
+    };
+
+    var Newpart = function() {
+        this.color = 'black';
+        if ((parts[0].x + directionx) > wid) {
+            for (i = 0; i < parts.length; i++) {
+                if ((0) === parts[i].x && (parts[0].y + directiony) === parts[i].y) {
+                    clearInterval(intervalId);
+                    ctx.font = "20px Georgia";
+                    ctx.fillText("Game Over", wid / 2, hei / 2);
+                } else {
+                    this.x = -10 + directionx;
+                    this.y = parts[0].y + directiony;
+                }
+            }
+        } else if ((parts[0].x + directionx) < 0) {
+            for (i = 0; i < parts.length; i++) {
+                if ((wid - 10) === parts[i].x && (parts[0].y + directiony) === parts[i].y) {
+                    clearInterval(intervalId);
+                    ctx.font = "20px Georgia";
+                    ctx.fillText("Game Over", wid / 2, hei / 2);
+                } else {
+                    this.x = wid + directionx;
+                    this.y = parts[0].y + directiony;
+                }
+            }
+        } else if ((parts[0].y + directiony) > hei) {
+            for (i = 0; i < parts.length; i++) {
+                if ((parts[0].x + directionx) === parts[i].x && (0) === parts[i].y) {
+                    clearInterval(intervalId);
+                    ctx.font = "20px Georgia";
+                    ctx.fillText("Game Over", wid / 2, hei / 2);
+                } else {
+                    this.x = parts[0].x + directionx;
+                    this.y = -10 + directiony;
+                }
+            }
+        } else if ((parts[0].y + directiony) < 0) {
+            for (i = 0; i < parts.length; i++) {
+                if ((parts[0].x + directionx) === parts[i].x && (hei - 10) === parts[i].y) {
+                    clearInterval(intervalId);
+                    ctx.font = "20px Georgia";
+                    ctx.fillText("Game Over", wid / 2, hei / 2);
+                } else {
+                    this.x = parts[0].x + directionx;
+                    this.y = hei + directiony;
+                }
+            }
+        } else {
+            for (u = 0; u < parts.length; u++) {
+                if ((parts[0].x + directionx) === parts[u].x && (parts[0].y + directiony) === parts[u].y) {
+                    clearInterval(intervalId);
+                    ctx.font = "20px Georgia";
+                    ctx.fillText("Game Over", wid / 2, hei / 2);
+                } else {
+                    this.x = parts[0].x + directionx;
+                    this.y = parts[0].y + directiony;
+                }
+            }
+        }
+    };
+
+    Newpart.prototype.draw = function() {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, w, h);
+    }
+
+    squareProp.prototype.draw = function() {
+        ctx.fillRect(this.x, this.y, w, h);
+        ctx.fillStyle = this.color;
+    };
+
+    var appl = new Apple();
+
+
+    function move() {
+        swit = 0;
+        if (parts[0].x !== appl.x || parts[0].y !== appl.y) {
+            ctx.clearRect(0, 0, wid, hei);
+            parts.pop();
+            parts.unshift(new Newpart);
+            appl.draw();
+            for (j = 0; j < parts.length; j++) {
+                parts[j].draw();
+            }
+        } else {
+            ctx.clearRect(0, 0, wid, hei);
+            parts.unshift(new Newpart);
+            appl.x = Math.round((Math.floor(Math.random() * (wid - 10))) / 10) * 10;
+            appl.y = Math.round((Math.floor(Math.random() * (hei - 10))) / 10) * 10;
+            appl.draw();
+            for (j = 0; j < parts.length; j++) {
+                parts[j].draw();
+            }
+        }
+    };
+    var swit = 0;
+    function control(e) {
+        if(swit === 0){
+            swit = 1;
+            if (e.keyCode === 68) {
+                if (directionx === -10) {} else {
+                    directionx = 10;
+                    directiony = 0;
+                }
+            }
+            if (e.keyCode === 65) {
+                if (directionx === 10) {} else {
+                    directionx = -10;
+                    directiony = 0;
+                }
+            }
+            if (e.keyCode === 87) {
+                if (directiony === 10) {} else {
+                    directionx = 0;
+                    directiony = -10;
+                }
+            }
+            if (e.keyCode === 83) {
+                if (directiony === -10) {} else {
+                    directionx = 0;
+                    directiony = 10;
+                }
+            }
+        }
+    };
+
+    for (i = 0; i < 3; i++) {
+        parts[i] = new squareProp();
+        parts[i].draw();
+        blocks++;
+    };
+
+    document.getElementById('body').addEventListener('keydown', control);
+    var intervalId = setInterval(move, 100);
+
+</script>
+</body>
+</html>

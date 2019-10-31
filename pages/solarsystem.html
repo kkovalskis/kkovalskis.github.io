@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solar System</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Solar System</h1>
+       <p style="text-align: center; margin-left: 20px;">Click the left mouse button somewhere around the middle black circle that represents a star. It will create planets that will orbit around the star. Click again very close to the planets that you already created to create a satellite that will orbit around a planet.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+      <div id="canv">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+       </div>
+   </main>
+   <div class="projects">
+       <div class="subprojects">
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+   </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var W = 600;
+        var H = 600;
+        canvas.width = W;
+        canvas.height = H;
+  
+        var xabs = W/2;
+        var yabs = H/2;
+        var rabs = 20;
+  
+        var i = 0;
+        var balls = [];
+  
+        ctx.beginPath();
+        ctx.arc(xabs,yabs,rabs,0,Math.PI*2);
+        ctx.fill();
+  
+        function create(e){
+            var x = e.pageX - $(this).offset().left;
+            var y = e.pageY - $(this).offset().top;
+            var attraction = 50;
+
+            var Planet = function(){
+                this.xf;
+                this.yf;
+                this.x = x;
+                this.y = y;
+                this.radius = 5;
+                this.dist1 = Math.sqrt((x-xabs)*(x-xabs)+(y-yabs)*(y-yabs));
+                if(this.x>=xabs && this.y >= yabs){
+                    this.fi1 = Math.atan((y-yabs)/(x-xabs))*(180/Math.PI);
+                }
+                else if(this.x<=xabs && this.y >= yabs){
+                    this.fi1 = 180-Math.atan((y-yabs)/(xabs-x))*(180/Math.PI);
+                }
+                else if(this.x<=xabs && this.y <= yabs){
+                    this.fi1 = Math.atan((yabs-y)/(xabs-x))*(180/Math.PI)+180;
+                }
+                else if(this.x>=xabs && this.y <= yabs){
+                    this.fi1 = 360-Math.atan((yabs-y)/(x-xabs))*(180/Math.PI);
+                }
+                for(let i=0;i<balls.length;i++){
+                    if(this.dist2 < attraction) {break;}
+                    this.u = i;
+                    this.dist2 = Math.sqrt((x-balls[i].xf)*(x-balls[i].xf)+(y-balls[i].yf)*(y-balls[i].yf));
+                    if(this.x>=balls[i].xf && this.y >= balls[i].yf){
+                        this.fi2 = Math.atan((y-balls[i].yf)/(x-balls[i].xf))*(180/Math.PI);
+                    }
+                    else if(this.x<=balls[i].xf && this.y >= balls[i].yf){
+                        this.fi2 = 180-Math.atan((y-balls[i].yf)/(balls[i].xf-x))*(180/Math.PI);
+                    }
+                    else if(this.x<=balls[i].xf && this.y <= balls[i].yf){
+                        this.fi2 = Math.atan((balls[i].yf-y)/(balls[i].xf-x))*(180/Math.PI)+180;
+                    }
+                    else if(this.x>=balls[i].xf && this.y <= balls[i].yf){
+                        this.fi2 = 360-Math.atan((balls[i].yf-y)/(x-balls[i].xf))*(180/Math.PI);
+                    }
+                }
+                if(balls.length === 0){
+                    this.dist = this.dist1;
+                    this.fi = this.fi1;
+                    this.z = true;
+                }
+                else{
+                    if(this.dist2 < attraction){
+                        this.dist = this.dist2;
+                        this.fi = this.fi2;
+                        this.z = false;
+                        this.radius = 2;
+                    }
+                    else{
+                        this.dist = this.dist1;
+                        this.fi = this.fi1;
+                        this.z = true;
+                    }
+                }
+            }
+            Planet.prototype.shift = function(){
+                if(this.z === true){
+                    ctx.beginPath();
+                    ctx.arc(this.xf,this.yf,this.radius,0,Math.PI*2);
+                    ctx.fill();
+                    this.fi++;
+                    this.xf = Math.cos(this.fi*Math.PI/180)*this.dist+xabs;
+                    this.yf = Math.sin(this.fi*Math.PI/180)*this.dist+yabs;
+                }
+                else{
+                    ctx.beginPath();
+                    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+                    ctx.fill();
+                    this.fi2+=4;
+                    this.x = Math.cos(this.fi2*Math.PI/180)*this.dist+balls[this.u].xf;
+                    this.y = Math.sin(this.fi2*Math.PI/180)*this.dist+balls[this.u].yf;
+                }
+            }
+            balls[i] = new Planet;
+            i++;
+        };
+
+        document.getElementById('canv').addEventListener('mousedown',create);
+  
+        function move(){
+            ctx.clearRect(0,0,W,H);
+            ctx.beginPath();
+            ctx.arc(xabs,yabs,rabs,0,Math.PI*2);
+            ctx.fill();
+            for(let i=0;i<balls.length;i++){
+                balls[i].shift();
+            }
+            let int = requestAnimationFrame(move);
+        };
+        move();
+        //setInterval(move,15);
+    </script>
+</body>
+</html>

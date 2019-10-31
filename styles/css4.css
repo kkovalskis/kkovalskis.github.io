@@ -1,0 +1,67 @@
+.headerdiv div a img{
+    width: 220px;
+    height: 50px;
+    margin: 0;
+}
+.headerdiv div a{
+    width: 271px;
+    height: 70px;
+    margin: 0;
+}
+.headerdiv{
+    width: 271px;
+    height: 70px;
+    padding: 0;
+    margin-top: 0;
+    margin-left: 5px !important;
+}
+.headerdiv div{
+    width: 271px;
+    height: 70px;
+    margin: 0;
+}
+.icon{
+    margin-top: 20px;
+}
+#lan{
+    margin-top: 20px;
+}
+#hed2{
+    top:140px;
+}
+.subwrap6{
+    height: 150px;
+    width: 340px;
+    margin: 0;
+}
+.subwrap7{
+    height: 150px;
+    width: 340px;
+}
+.subwrap7 img{
+    height: 150px;
+    width: 340px;
+}
+.subwrap5{
+    width: 140px;
+    height: 170px;
+}
+.subwrap4{
+    width: 140px;
+    height: 170px;
+}
+.subwrap4 img{
+    width: 140px;
+    height: 170px;
+}
+.cauruselright{
+    height: 200px;
+    width: 100px;
+}
+.cauruselleft{
+    height: 200px;
+    width: 100px;
+}
+.caurusel{
+    bottom: 30%;
+}

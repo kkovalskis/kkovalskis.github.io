@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Company</title>
+    <script src="https://kit.fontawesome.com/56bba70eec.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="shortcut icon" href="../images/portrait_w_r1.png">
+    <link rel="stylesheet" href="../styles/css.css" media="screen and (max-width: 1920px)">
+    <link rel="stylesheet" href="../styles/css2.css" media="screen and (max-width: 1330px)">
+    <link rel="stylesheet" href="../styles/css3.css" media="screen and (max-width: 910px)">
+    <link rel="stylesheet" href="../styles/css4.css" media="screen and (max-width: 460px)">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="arrow" onclick="toTop()">
+            <i class="fas fa-long-arrow-alt-up" id="arro"></i>
+        </div>
+        <header>
+            <div class="headerdiv" id="hed1">
+                <div><a href=""><img src="../images/logo.png" alt="logo.png"></a></div>
+            </div>
+            <div class="headerdiv" id="hed2">
+                <div><a href="" class="menu">ABOUT US</a></div>
+                <div><a href="" class="menu">CAREER</a></div>
+                <div><a href="" class="menu">PROJECTS</a></div>
+                <div><a href="" class="menu">CONTACTS</a></div>
+            </div>
+            <div style="height: 100%;" id="lan">
+                <div id="lang">
+                    <div class="menulang"><a href="" class="heada">en</a></div>
+                    <div class="menulang2"><a href="" class="heada">lv</a></div>
+                </div>
+            </div>
+            <div class="icon">
+                <div class="hamburger1"></div>
+                <div class="hamburger2"></div>
+                <div class="hamburger3"></div>
+            </div>
+        </header>
+        <div class="mainimg">
+            <div class="mainimg1">
+            </div>
+            <div class="mainimg2">
+            </div>
+            <div class="mainimg3">
+            </div>
+            <div class="caurusel">
+                <div class="caurusel1" id="caur1" onclick="changepic(this)"></div>
+                <div class="caurusel2" id="caur2" onclick="changepic(this)"></div>
+                <div class="caurusel3" id="caur3" onclick="changepic(this)"></div>
+            </div>
+            <div class="cauruselright" onclick="forward()">
+            </div>
+            <div class="cauruselleft" onclick="back()">
+            </div>
+            <div class="arrow2" onclick="toTop2()">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+        </div>
+        <div class="wrap1">
+            <div class="provide"><a href=""><img src="../images/our_values.png" alt="img.png" width="206"
+                        height="206"></a><br>
+                <h3><a style="color: #114a5e" href="" id="value1">OUR VALUES</a></h3>
+            </div>
+            <div class="provide"><a href=""><img src="../images/we_ensure.png" alt="img.png" width="206"
+                        height="206"></a><br>
+                <h3><a style="color: #114a5e" href="" id="value2">WE ENSURE</a></h3>
+            </div>
+            <div class="provide"><a href=""><img src="../images/facts.png" alt="img.png" width="206"
+                        height="206"></a><br>
+                <h3><a style="color: #114a5e" href="" id="value3">FACTS</a></h3>
+            </div>
+        </div>
+        <div class="wrap2">
+            <div class="subwrap2">
+                <div class="subwrap6" id="subwr6"><a href="">
+                        <p class="picp">Lorem ipsum dolor sit, amet</p><br><br>
+                        <p class="picp">Year: 0000</p>
+                        <div class="subwrap7" id="subwr7"><img src="../images/typelarge.jpg" alt="img.jpg"></div>
+                    </a></div>
+            </div>
+            <div class="subwrap2">
+                <div class="subwrap3">
+                    <div class="subwrap5"><a href="">
+                            <p class="picp">Lorem ipsum dolor</p><br><br>
+                            <p class="picp">Year: 0000</p>
+                            <div class="subwrap4"><img src="../images/type1.jpg" alt="img.jpg"></div>
+                        </a></div>
+                    <div class="subwrap5"><a href="">
+                            <p class="picp">Lorem ipsum dolor</p><br><br><br>
+                            <p class="picp">Year: 0000</p>
+                            <div class="subwrap4"><img src="../images/type2.jpg" alt="img.jpg"></div>
+                        </a></div>
+                </div>
+                <div class="subwrap3">
+                    <div class="subwrap5"><a href="">
+                            <p class="picp">Lorem ipsum dolor</p><br><br>
+                            <p class="picp">Year: 0000</p>
+                            <div class="subwrap4"><img src="../images/type3.jpg" alt="img.jpg"></div>
+                        </a></div>
+                    <div class="subwrap5"><a href="">
+                            <p class="picp">Lorem ipsum dolor</p><br><br>
+                            <p class="picp">Year: 0000</p>
+                            <div class="subwrap4"><img src="../images/type4.jpg" alt="img.jpg"></div>
+                        </a></div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div style="margin-top: 33px;">
+                <h3>CONTACTS</h3>
+                <p>Phone:</p>
+                <p>Phone1</p>
+                <p>Phone2</p>
+                <p>Phone3</p>
+            </div>
+            <div>
+                <p>E-mail:</p>
+                <p>someemail@email.mail</p>
+                <p>someemail@email.mail</p>
+                <p>someemail@email.mail</p>
+            </div>
+            <div class="footimg">
+                <img src="../images/portrait_w_r1.png" alt="pic.png">
+            </div>
+            <div>
+                <p>Address:</p>
+                <p>Address</p>
+                <p>Address</p>
+                <p>Address</p>
+                <div class="socialmedia">
+                    <a target="_blank" href="https://www.facebook.com/" title="Facebook"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a target="_blank" href="https://www.twitter.com/" title="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                    <a target="_blank" href="https://www.instagram.com/" title="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        function over() {
+            $(this).css('border-bottom', '3px solid #35c117');
+        };
+
+        function out() {
+            $(this).css('border', '0');
+        }
+        $("#value1, #value2, #value3").hover(over, out);
+        control = 1;
+        setTimeout(function () {
+            control = 0
+        }, 1000);
+
+        var control2 = 0;
+
+        function over2() {
+            $(this).find('div').stop(true, true).fadeTo(300, 0.3);
+            $(this).find('p').stop(true, true).fadeTo(300, 1);
+        };
+
+        function out2() {
+            $(this).find('div').stop(true, true).fadeTo(300, 1);
+            $(this).find('p').stop(true, true).fadeTo(300, 0);
+        };
+        $(".subwrap6, .subwrap5").hover(over2, out2);
+
+        function over4() {
+            $(this).stop(true, true).animate({
+                color: '#25a9e0'
+            }, 300);
+        };
+
+        function out4() {
+            $(this).stop(true, true).animate({
+                color: '#35c117'
+            }, 300);
+        };
+        $("#arro").hover(over4, out4);
+
+        $(window).on("scroll", function () {
+            var scrollPos = $(window).scrollTop();
+            if (scrollPos <= 0) {
+                $("header").css('background-color', 'transparent');
+            }
+        });
+
+        $(window).on("scroll", function () {
+            var scrollPos = $(window).scrollTop();
+            if (scrollPos > 0) {
+                $("header").css('background-color', 'rgba(0,0,0,0.7)');
+            }
+        });
+
+        function over3() {
+            $('.menulang2').stop(true, true).fadeTo('fast', 1);
+        }
+
+        function out3() {
+            $('.menulang2').stop(true, true).fadeTo('fast', 0);
+        }
+        $("#lang").hover(over3, out3);
+
+        var count = 1;
+
+        function caurusel() {
+            count++;
+            let arr = [1, 2, 3];
+            if (count > 3) {
+                count = 1;
+            }
+            if (count < 1) {
+                count = 3;
+            }
+            $('.mainimg' + count).animate({
+                opacity: 1
+            }, 400, function () {
+                for (let i = 0; i < arr.filter(num => num != count).length; i++) {
+                    $('.mainimg' + arr.filter(num => num != count)[i]).animate({
+                        opacity: 0
+                    }, 400);
+                }
+                $('.caurusel1').animate({
+                    backgroundColor: '#35c117'
+                }, 1)
+                $('.caurusel2').animate({
+                    backgroundColor: '#35c117'
+                }, 1)
+                $('.caurusel3').animate({
+                    backgroundColor: '#35c117'
+                }, 1)
+                $('.caurusel' + count).animate({
+                    backgroundColor: '#25a9e0'
+                }, 1)
+            })
+        }
+
+        var inter = setInterval(caurusel, 5000);
+
+        function changepic(a) {
+            var i = a.id;
+            var id = '#' + i.toString();
+            var cl = i.toString();
+            var cl2 = parseInt(cl.slice(4, 5), 10);
+            let arr = [1, 2, 3];
+            $('.caurusel1').animate({
+                backgroundColor: '#35c117'
+            }, 1)
+            $('.caurusel2').animate({
+                backgroundColor: '#35c117'
+            }, 1)
+            $('.caurusel3').animate({
+                backgroundColor: '#35c117'
+            }, 1)
+            $(id).animate({
+                backgroundColor: '#25a9e0'
+            }, 1);
+            count = cl2;
+            $('.mainimg' + count).animate({
+                opacity: 1
+            }, 400);
+            for (let i = 0; i < arr.filter(num => num != cl2).length; i++) {
+                $('.mainimg' + arr.filter(num => num != cl2)[i]).animate({
+                    opacity: 0
+                }, 400);
+            }
+        };
+
+        var sw = 0;
+
+        function swit() {
+            sw = 0;
+        };
+
+        function toTop() {
+            if (sw === 0) {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 700);
+                sw = 1;
+                setTimeout(swit, 1000);
+            } else {
+                return;
+            }
+        };
+
+        function toTop2() {
+            if ($(window).width() < 910) {
+                $('html, body').animate({
+                    scrollTop: 274
+                }, 700);
+            } else {
+                $('html, body').animate({
+                    scrollTop: 873
+                }, 700);
+            }
+        };
+
+        function launch() {
+            clearInterval(inter);
+            inter = setInterval(caurusel, 5000);
+        };
+
+        var sw2 = 0;
+
+        function swit2() {
+            sw2 = 0;
+        };
+
+        function forward() {
+            if (sw2 === 0) {
+                clearInterval(inter);
+                count++;
+                let arr = [1, 2, 3];
+                if (count > 3) {
+                    count = 1;
+                }
+                if (count < 1) {
+                    count = 3;
+                }
+                $('.mainimg' + count).animate({
+                    opacity: 1
+                }, 400, function () {
+                    for (let i = 0; i < arr.filter(num => num != count).length; i++) {
+                        $('.mainimg' + arr.filter(num => num != count)[i]).animate({
+                            opacity: 0
+                        }, 400);
+                    }
+                    $('.caurusel1').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel2').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel3').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel' + count).animate({
+                        backgroundColor: '#25a9e0'
+                    }, 1)
+                })
+                sw2 = 1;
+                coeff = 1;
+                setTimeout(swit2, 1000);
+                var time = setTimeout(launch, 5000);
+            } else {
+                return;
+            }
+        };
+
+
+        function back() {
+            if (sw2 === 0) {
+                clearInterval(inter);
+                count--;
+                let arr = [1, 2, 3];
+                if (count > 3) {
+                    count = 1;
+                }
+                if (count < 1) {
+                    count = 3;
+                }
+                $('.mainimg' + count).animate({
+                    opacity: 1
+                }, 400, function () {
+                    for (let i = 0; i < arr.filter(num => num != count).length; i++) {
+                        $('.mainimg' + arr.filter(num => num != count)[i]).animate({
+                            opacity: 0
+                        }, 400);
+                    }
+                    $('.caurusel1').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel2').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel3').animate({
+                        backgroundColor: '#35c117'
+                    }, 1)
+                    $('.caurusel' + count).animate({
+                        backgroundColor: '#25a9e0'
+                    }, 1)
+                })
+                sw2 = 1;
+                coeff = 1;
+                setTimeout(swit2, 1000);
+                var time = setTimeout(launch, 5000);
+            } else {
+                return;
+            }
+        };
+
+        var menucount2 = 1;
+        var menucount = 0;
+        $('.icon').click(function () {
+            $('.icon').toggleClass('active');
+            if (menucount === 0) {
+                $('#hed2 div').css('display', 'block');
+                $('.caurusel').css('display', 'none');
+                $('.cauruselright').css('display', 'none');
+                $('.cauruselleft').css('display', 'none');
+                menucount = 1;
+                menucount2 = 0;
+            } else if (menucount === 1) {
+                $('#hed2 div').css('display', 'none');
+                $('.caurusel').css('display', 'block');
+                $('.cauruselright').css('display', 'block');
+                $('.cauruselleft').css('display', 'block');
+                menucount = 0;
+                menucount2 = 1;
+            }
+        });
+
+        $(window).resize(function () {
+            if (menucount2 === 0) {
+                $('#hed2 div').css('display', 'block');
+            } else {
+                if ($(window).width() < 910) {
+                    $('#hed2 div').css('display', 'none');
+                } else if ($(window).width() > 910) {
+                    $('#hed2 div').css('display', 'block');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

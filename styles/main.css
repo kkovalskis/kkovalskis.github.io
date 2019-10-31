@@ -1,0 +1,267 @@
+body{
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    text-align: justify;
+    font-size: 1.05em
+}
+main{
+    width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    transition: 1s;
+}
+header{
+    padding: 20px 40px;
+    background-color: #f2f3f7;
+}
+.sticky{
+    top: 20px;
+    position: sticky;
+}
+.titlepic{
+    border: 2px solid grey;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 100px;
+    background-size: contain;
+}
+.title{
+    margin: 20px 0 0 0;
+    text-align: center;
+    font-size: 1.7em;
+}
+.menu{
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.9em
+}
+.majorcontainer{
+    padding: 20px;
+    margin-left: 100px;
+    transition: 1s;
+}
+h2{
+    margin: 0 auto 20px auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    color: #0e94ac;
+}
+.margin{
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+}
+.underline{
+    position: relative;
+    transition: 0.3s;
+}
+.underline:before{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    content: '';
+    display: block;
+    height: 1px;
+    background: black;
+    transition: 0.3s;
+}
+.underline:hover:before{
+    left: 0;
+    width: 100%;
+    background: #0e94ac;
+}
+.underline:hover{
+    color: #0e94ac;
+}
+h2:before{
+    content: "";
+    display: block;
+    background: #0e94ac;
+    height: 2px;
+    width: 0%;
+    border-radius: 5px;
+}
+h2:after{
+    content: "";
+    display: block;
+    background: #0e94ac;
+    height: 2px;
+    width: 0%;
+}
+h2.loaded:before{
+    width: 50%;
+    transition: 1s;
+}
+h2.loaded:after{
+    width: 50%;
+    transition: 1s;
+}
+.icon{
+    margin: 0 auto;
+    border: 1px solid #0e94ac;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+}
+i{
+    color: #0e94ac;
+}
+.point{
+    margin-bottom: 20px;
+    transition: 2s;
+    opacity: 0;
+}
+.subpoint{
+    display: flex;
+    justify-content: center;
+}
+.subpoint2{
+    width: 50%;
+}
+.skills{
+    display: flex;
+    justify-content: center;
+}
+.subskills{
+    margin: auto;
+}
+.subskills2{
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    align-items: center;
+    margin-top: 10px;
+}
+.subskills2 p{
+    transition: 0.3s;
+}
+.projects{
+    display: flex;
+    flex-direction: column;
+}
+.subprojects{
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+.subprojects2{
+    display: flex;
+    justify-content: center;
+    width: 250px;
+    height: 80px;
+    align-items: center;
+    margin: 0 30px 0 30px;
+    position: relative;
+}
+a{
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+    position: relative;
+}
+svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+}
+svg rect{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke: #000;
+    stroke-width: 1px;
+    transition: 1s;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+}
+.subprojects2:hover svg rect{
+    stroke-dashoffset: 0;
+}
+h3{
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+li{
+    margin-right: 60px;
+    margin-bottom: 15px;
+}
+.edu{
+    margin-bottom: 40px;
+}
+.subpoint3{
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    margin: 0 auto;
+}
+.subpoint4{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.subpoint4 div{
+    width: 230px;
+    height: 70px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.subpoint4 div p{
+    text-align: center;
+}
+.otherskills p{
+    transition: 0.3s;
+}
+.cont{
+    display: flex;
+    justify-content: center;
+}
+.subcont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+.block{
+    margin: 0 auto;
+}
+.icon2{
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    margin-right: 10px;
+}
+footer{
+    opacity: 0;
+    transition: 2s;
+}
+canvas{
+    display: block;
+    border: 1px solid grey;
+}

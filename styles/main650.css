@@ -1,0 +1,30 @@
+body{
+   width: 300px; 
+}
+main{
+    width: 300px !important;
+}
+.majorcontainer{
+    width: 300px;
+    margin: auto;
+}
+.point{
+    width: 300px;
+    margin-left: 10px;
+}
+.skills{
+    flex-direction: column;
+}
+.cont{
+    flex-direction: column;
+}
+.subpoint4 div{
+    margin-left: 0;
+    justify-content: flex-start;
+}
+.special{
+    text-align: center;
+}
+.subpoint2{
+    margin: 10px;
+}

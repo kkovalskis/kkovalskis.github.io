@@ -1,0 +1,9 @@
+header{
+    display: none;
+}
+.majorcontainer{
+    width: 900px;
+}
+main{
+    width: 900px !important;
+}

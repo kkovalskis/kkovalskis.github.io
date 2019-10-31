@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Physics For Balls</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Physics For Balls</h1>
+       <p style="text-align: center;">Press "W" "A" "S" "D" keys on your keyboard to accelerate all balls either to top, left, bottom or right respectively.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+   </main>
+   <div class="projects">
+       <div class="subprojects">
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+   </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var W = 800;
+        var H = 600;
+        c.width = W;
+        c.height = H;
+        var gravity = 0.5;
+        var bounce_factor = 0.9;
+        var colors = ['blue','red', 'yellow', 'green'];
+
+        class Ball{
+            constructor(){
+                this.radius = 10;
+                this.x = W/2;
+                this.y = H/2;
+                this.color = colors[Math.floor(Math.random()*colors.length)];
+                this.vxs = Math.random()*-30+10;
+                this.vys = Math.random()*-30+10;
+                this.count = 1;
+            }
+            draw(){
+                ctx.beginPath();
+                ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        };
+        
+        class Bball extends Ball{
+            constructor(){
+                super();
+                this.color = 'black';
+                this.radius = 5;
+            }
+        };
+
+        var balls = [];
+        for(let i=0;i<50;i++){
+            balls[i] = new Ball();
+        };
+        for(let i=50;i<100;i++){
+            balls[i] = new Bball();
+        };
+
+        function move(){
+            ctx.clearRect(0, 0, W, H);
+            for(let i of balls){
+                i.x += i.vxs;
+                i.y += i.vys;
+                i.vys+=gravity;
+                if (i.y >= (H-i.radius)) {
+                    if(i.count>=0){
+                        i.count-=0.05;
+                    }
+                    i.y = H - i.radius;
+                    i.vys *= -(bounce_factor*i.count);
+                    i.vxs *= bounce_factor;
+                }
+                if (i.y <= (0+i.radius)) {
+                    i.y = 0 + i.radius;
+                    i.vys *= -bounce_factor;
+                    i.vxs *= bounce_factor;
+                }
+                if (i.x >= (W-i.radius)) {
+                    i.x = W - i.radius;
+                    i.vxs *= -bounce_factor;
+                    i.vxs *= bounce_factor;
+                }
+                if (i.x <= (0+i.radius)) {
+                    i.x = 0 + i.radius;
+                    i.vxs *= -bounce_factor;
+                    i.vxs *= bounce_factor;
+                }
+                i.draw();
+            }
+            var int = requestAnimationFrame(move);
+        };
+        move();
+        //setInterval(move,15);
+
+
+        function control(e){
+            if(e.keyCode===68){
+                for(let i of balls){
+                    i.vxs+=Math.random()*5+5;;
+                }
+            }
+            if(e.keyCode === 65){
+                for(let i of balls){
+                    i.vxs-=Math.random()*5+5;;
+                }
+            }
+            if(e.keyCode === 87){
+                for(let i of balls){
+                    i.vys-=Math.random()*5+5;
+                    i.count=1;
+                }
+            }
+            if(e.keyCode === 83){
+                for(let i of balls){
+                    i.vys+=Math.random()*5+5;;
+                }
+            }
+         };
+        
+        document.getElementById('bod').addEventListener('keydown',control);
+    </script>
+</body>
+</html>

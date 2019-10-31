@@ -1,0 +1,41 @@
+.subwrap6{
+    height: 360px;
+    width: 560px;
+}
+.subwrap7{
+    height: 360px;
+    width: 560px;
+}
+.subwrap7 img{
+    height: 360px;
+    width: 560px;
+}
+.subwrap5{
+    width: 150px;
+    height: 180px;
+}
+.subwrap4{
+    width: 150px;
+    height: 180px;
+}
+.subwrap4 img{
+    width: 150px;
+    height: 180px;
+}
+.provide{
+    margin: 150px 50px;
+}
+footer div{
+    margin: 100px 50px 0 50px;
+}
+#lan{
+    right: 2%;
+    position: absolute;
+}
+.menu{
+    margin-left: 6px;
+    margin-right: 6px;
+}
+#hed2 div{
+    display: block;
+}

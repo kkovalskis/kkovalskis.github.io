@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fractal Tree</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Double Pendulum</h1>
+       <p style="text-align: center;">Usually fractal trees are done by using a recursive function. However in this case I wanted it to grow gradually. For that reason I had to solve this problem in another way.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+   </main>
+   <div class="projects">
+       <div class="subprojects">
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+   </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var W = 800;
+        var H = 600;
+        canvas.width = W;
+        canvas.height = H;
+        var l = 100;
+        var fi1 = 15;
+        var x0 = W/2;
+        var y0 = 0;
+        var x1 = x0;
+        var y1 = y0+120;
+        var x2 = x1+Math.sin((fi1)* Math.PI / 180)*l;
+        var y2 = y1+Math.cos((fi1)* Math.PI / 180)*l;
+        var coordx = [x0,x1,x2];
+        var coordy = [y0,y1,y2];
+        var k = 2;
+        var n = 2;
+        var u = 1;
+        var coeff = 1;
+        var fi2 = 15;
+        var k1 = 1;
+        var k0 = 0;
+        var k01 = 2;
+        var k2 = 1;
+  
+        ctx.beginPath();
+        ctx.moveTo(x0,y0);
+        ctx.lineTo(x1,y1);
+        ctx.stroke();
+    
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        ctx.lineTo(x2,y2);
+        ctx.stroke();
+    
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        ctx.lineTo(W/2-x2+W/2,y2);
+        ctx.stroke();
+    
+        function draw(){
+            n++;
+            u++;
+            k = n - coeff;
+            if(u===4 || u===8 || u===16 || u===32 || u===64 || u===128 || u===256 || u===512 || u===1024 || u===2048){
+                l*=0.75;
+                if(l<15){
+                    clearInterval(int);
+                    return;
+                }
+            }
+            if(k0%2===0){
+                k1++;
+            }
+            if(k01%4===0){
+                k2++;
+            }
+            k0++;
+            k01++;
+            if(coordy[k1]>coordy[k2]){
+                fi1 = Math.atan((coordx[k1]-coordx[k2])/(coordy[k1]-coordy[k2]))*180/Math.PI;
+            }
+            else{
+               if(coordx[k1]<coordx[k2]){
+                    fi1 = (Math.atan((Math.abs(coordy[k1]-coordy[k2]))/Math.abs((coordx[k1]-coordx[k2])))*180/Math.PI+90)*(-1);
+                }
+                else{
+                    fi1 = Math.atan((Math.abs(coordy[k1]-coordy[k2]))/(coordx[k1]-coordx[k2]))*180/Math.PI+90;
+                }
+            }
+            if(u%2===0){
+               if(fi1>=90){
+                   coordx.push(coordx[k]+Math.cos((fi1-fi2-90)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]-Math.sin((fi1-fi2-90)* Math.PI / 180)*l);
+                }
+                else if(fi1<-90){
+                   coordx.push(coordx[k]-Math.sin((180-fi1*(-1)-fi2)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]-Math.cos((180-fi1*(-1)-fi2)* Math.PI / 180)*l)
+                }
+                else{
+                   coordx.push(coordx[k]+Math.sin((fi1-fi2)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]+Math.cos((fi1-fi2)* Math.PI / 180)*l);
+                }
+            }
+            else{
+               if(fi1>=90){
+                   coordx.push(coordx[k]+Math.sin((180-fi1-fi2)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]-Math.cos((180-fi1-fi2)* Math.PI / 180)*l);
+                }
+                else if(fi1<-90){
+                   coordx.push(coordx[k]-Math.cos((fi1*(-1)-fi2-90)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]-Math.sin((fi1*(-1)-fi2-90)* Math.PI / 180)*l)
+                }
+                else{
+                   coordx.push(coordx[k]+Math.cos((90-fi1-fi2)* Math.PI / 180)*l);
+                   coordy.push(coordy[k]+Math.sin((90-fi1-fi2)* Math.PI / 180)*l);
+                }
+            }
+            ctx.beginPath();
+            ctx.moveTo(coordx[k],coordy[k]);
+            ctx.lineTo(coordx[n],coordy[n]);
+            ctx.stroke();
+        
+            ctx.beginPath();
+            ctx.moveTo(W/2-(coordx[k]-W/2),coordy[k]);
+            ctx.lineTo(W/2-(coordx[n]-W/2),coordy[n]);
+            ctx.stroke();
+            if(u%2===0){
+               coeff++;
+            }
+        };
+        var int = setInterval(draw,60);
+    </script>
+</body>
+</html>

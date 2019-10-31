@@ -1,0 +1,14 @@
+.majorcontainer{
+    width: 600px;
+    margin: auto;
+}
+.subprojects{
+    flex-direction: column;
+}
+.subpoint3{
+    flex-direction: column;
+    width: 100%;
+}
+main{
+    width: 600px !important;
+}

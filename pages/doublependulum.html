@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Double Pendulum</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Double Pendulum</h1>
+       <p style="text-align: center;">Here I tried to simulate physics of a double pendulum.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+   </main>
+   <div class="projects">
+       <div class="subprojects">
+          <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+    </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var W = 800;
+        var H = 600;
+        canvas.width = W;
+        canvas.height = H;
+        var gravity = 0.1;
+        var l1 = 100;
+        var fi1 = 0;
+        var l2 = 100;
+        var fi2 = 70;
+        var angleaccel1 = 0;
+        var angleaccel2 = 0;
+        var damping = 0.993;
+        var m1 = 5;
+        var m2 = 5;
+
+        var Pendulum = function(){
+            this.x1 = W/2;
+            this.x2 = W/2+l1*Math.sin(fi1* Math.PI / 180);
+            this.y1 = 0;
+            this.y2 = l1*Math.cos(fi1* Math.PI / 180);
+        };
+  
+        var Pendulum2 = function(){
+            this.x1 = W/2+l1*Math.sin(fi1* Math.PI / 180);
+            this.x2 = W/2+l1*Math.sin(fi1* Math.PI / 180)+l2*Math.sin(fi2* Math.PI / 180);
+            this.y1 = l1*Math.cos(fi1* Math.PI / 180);
+            this.y2 = l1*Math.cos(fi1* Math.PI / 180)+l2*Math.cos(fi2* Math.PI / 180);
+        };
+  
+        Pendulum.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.moveTo(this.x1,this.y1);
+            ctx.lineTo(W/2+l1*Math.sin(fi1* Math.PI / 180),l1*Math.cos(fi1* Math.PI / 180));
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(W/2+l1*Math.sin(fi1* Math.PI / 180),l1*Math.cos(fi1* Math.PI / 180),m1,0,Math.PI*2);
+            ctx.fill();
+        };
+  
+        Pendulum2.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.moveTo(W/2+l1*Math.sin(fi1* Math.PI / 180),l1*Math.cos(fi1* Math.PI / 180));
+            ctx.lineTo(W/2+l1*Math.sin(fi1* Math.PI / 180)+l2*Math.sin(fi2* Math.PI / 180),l1*Math.cos(fi1* Math.PI / 180)+l2*Math.cos(fi2* Math.PI / 180));
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(W/2+l1*Math.sin(fi1* Math.PI / 180)+l2*Math.sin(fi2* Math.PI / 180),l1*Math.cos(fi1* Math.PI / 180)+l2*Math.cos(fi2* Math.PI / 180),m2,0,Math.PI*2);
+            ctx.fill();
+        };
+  
+        var pend = new Pendulum();
+        pend.draw();
+  
+        var pend2 = new Pendulum2();
+        pend2.draw();
+  
+        function move(){
+            ctx.clearRect(0,0,W,H);
+            pend.draw();
+            pend2.draw();
+            
+            angleaccel1 += (m1*gravity+m2*gravity*Math.cos(fi2*Math.PI/180)*Math.cos(fi2*Math.PI/180))*Math.sin(fi1* Math.PI / 180)-m2*gravity*Math.cos(fi2*Math.PI/180)*Math.sin((fi2-fi1)*Math.PI/180);
+            
+            angleaccel2 += m2*gravity*Math.sin(fi2* Math.PI / 180);
+            
+            fi1 -= angleaccel1;
+            fi2 -= angleaccel2;
+            fi1 *= damping;
+            fi2 *= damping;
+            var int = requestAnimationFrame(move);
+        };
+        move();
+        //setInterval(move,15);
+
+        
+    </script>
+</body>
+</html>

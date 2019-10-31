@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flappy Bird Clone</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Flappy Bird Clone</h1>
+       <p style="text-align: center;">Press "W" key on your keyboard to make a black square that plays a role of a bird in this game to accelerate upwards. Keep pressing "W" multiple times to get througs barriers.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+   </main>
+      <div class="projects">
+           <div class="subprojects">
+               <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+            </div>
+            <div class="subprojects">
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+            </div>
+            <div class="subprojects">
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+                <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+            </div>
+        </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var W = 1000;
+        var H = 600;
+        canvas.width = W;
+        canvas.height = H;
+        var gravity = 0.2;
+        var velocity = 5;
+        var vy = 0;
+        var x = W+100;
+        var hole = 100;
+        var width = 40;
+        ctx.font = '20px Arial';
+        var colarr = [];
+        
+        var size = 20;
+        var speed = 5;
+        
+        var Columns = function(){
+            this.x = x;
+            this.y = 0;
+            this.length = Math.floor((Math.random()*5)+1)*70;
+        };
+        
+        Columns.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.fillStyle = 'black';
+            ctx.fillRect(this.x,this.y,width,this.length);
+            ctx.fillRect(this.x,this.length+hole,width,H-(this.length+hole));
+        };
+        
+        var Square = function(){
+            this.size = size;
+            this.x = 400;
+            this.y = 400;
+        };
+        
+        Square.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.fillStyle = 'black';
+            ctx.rect(this.x,this.y,this.size,this.size);
+            ctx.fill();
+        };
+
+        vy = 0;
+        x = W+100;
+        var square = new Square();
+        square.draw();
+            
+        for(i=0;i<500;i++){
+            colarr[i] = new Columns;
+            colarr[i].draw();
+            x += Math.floor((Math.random()*2)+1)*400;
+        };
+
+        function move(){
+            ctx.clearRect(0, 0, W, H);
+            square.y += vy;
+            square.draw();
+            vy+=gravity;
+            
+            for(u=0;u<colarr.length;u++){
+                colarr[u].draw();
+                colarr[u].x-=speed;
+            }
+            if((square.y+square.size) > H || (square.y) < 0){
+                //clearInterval(idi);
+                cancelAnimationFrame(idi);
+                ctx.fillStyle = 'red';
+                ctx.fillText("Game Over", W/2-50, H/2);
+                return;
+            }
+            for(u=0;u<colarr.length;u++){
+                if((square.x+square.size-5)>=colarr[u].x &&
+                   (square.x)<=(colarr[u].x + width) &&
+                   (square.y)<=colarr[u].length){
+                    //clearInterval(idi);
+                    cancelAnimationFrame(idi);
+                    ctx.fillStyle = 'red';
+                    ctx.fillText("Game Over", W/2-50, H/2);
+                    return;
+                }
+                if((square.x+square.size-5)>=colarr[u].x &&
+                   (square.x)<=(colarr[u].x + width) &&
+                   (square.y+square.size)>=colarr[u].length+hole){
+                    //learInterval(idi);
+                    cancelAnimationFrame(idi);
+                    ctx.fillStyle = 'red';
+                    ctx.fillText("Game Over", W/2-50, H/2);
+                    return;
+                }
+            }
+            var idi = requestAnimationFrame(move);
+        };
+        //var idi = setInterval(move,15);
+        move();
+        
+        function control(e){
+            if(e.keyCode === 87){
+                vy-=velocity;
+            }
+        };
+        document.getElementById('bod').addEventListener('keydown',control);
+        
+    </script>
+</body>
+</html>

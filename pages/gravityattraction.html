@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gravity Force</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+<body id="bod">
+       <h1 style="text-align: center;">Gravity Force</h1>
+       <p style="text-align: center;">It is a simulation of a gravitational attraction between two bodies. You can click somewhere on the canvas to change the position of a bigger body.</p>
+   <main style="display: flex; justify-content: center; width: 100%;">
+      <div id="canv">
+       <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+       </div>
+   </main>
+   <div class="projects">
+       <div class="subprojects">
+           <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="../index.html">Home</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width = ""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+   </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+        
+        function smaller2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2(){
+            arr2.forEach(function(item){
+                $(item).css('fontSize', '1em');
+            });
+        };
+        
+        function bigger(){
+            this.style.fontSize = '1.4em';
+        };
+        function over(){
+            $(this).stop(true,true).animate({backgroundColor: '#f2f3f7'},500);
+        }
+        function out(){
+            $(this).stop(true,true).animate({backgroundColor: 'white'},500);
+        }
+        for(i of arr2){
+            i.addEventListener('mouseover',smaller2);
+            i.addEventListener('mouseover',bigger);
+            i.addEventListener('mouseover',over);
+            i.addEventListener('mouseout',normal2);
+            i.addEventListener('mouseout',out);
+        };
+        
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var W = 1200;
+        var H = 800;
+        canvas.width = W;
+        canvas.height = H;
+        var coords1 = [];
+        var coords2 = [];
+        var m1 = 20;
+        var m2 = 3;
+        var g = 50;
+        var x = W/2;
+        var y = H/2;
+
+        function coord(e){
+            x = e.pageX - $(this).offset().left;
+            y = e.pageY - $(this).offset().top;
+        }
+
+        var Massbig = function(){
+            this.x = W/2;
+            this.y = H/2;
+            this.radius = m1;
+        };
+
+        Massbig.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+            ctx.stroke();
+        };
+
+        var mbig = new Massbig;
+        mbig.draw();
+
+        var Particles = function(){
+            this.x = W/2+100;
+            this.y = H/2-200;
+            this.radius = m2;
+            this.dist=1;
+            this.dist2=1;
+            this.force=1;
+            this.fi;
+            this.fi2 = 0;
+        };
+
+        Particles.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+            ctx.fill();
+        };
+
+        var particle = new Particles;
+        particle.draw();
+
+        coords1.push(particle.x);
+        coords1.push(particle.y);
+        coords2.push(particle.x-1);
+        coords2.push(particle.y);
+
+        function move(){
+            mbig.x = x;
+            mbig.y = y;
+            ctx.clearRect(0,0,W,H);
+
+            coords1[1]=particle.x;
+            coords1[2]=particle.y;
+
+
+            if(particle.x>=mbig.x && particle.y >= mbig.y){
+                particle.fi = Math.atan((particle.y-mbig.y)/(particle.x-mbig.x))*(180/Math.PI);
+           }
+            else if(particle.x<=mbig.x && particle.y >= mbig.y){
+                particle.fi = 180-Math.atan((particle.y-mbig.y)/(mbig.x-particle.x))*(180/Math.PI);
+            }
+            else if(particle.x<=mbig.x && particle.y <= mbig.y){
+                particle.fi = Math.atan((mbig.y-particle.y)/(mbig.x-particle.x))*(180/Math.PI)+180;
+            }
+            else if(particle.x>=mbig.x && particle.y <= mbig.y){
+                particle.fi = 360-Math.atan((mbig.y-particle.y)/(particle.x-mbig.x))*(180/Math.PI);
+            }
+
+            particle.dist2 = Math.sqrt((coords1[1]-mbig.x)*(coords1[1]-mbig.x)+(coords1[2]-mbig.y)*(coords1[2]-mbig.y));
+
+            if(particle.dist2<100){
+                particle.dist2=100;
+            }
+            if(particle.dist2>300){
+                particle.dist2=300;
+            }
+            particle.force = g*m1*m2/(particle.dist2*particle.dist2);
+
+            particle.x = -Math.cos(particle.fi*Math.PI/180)*particle.force+coords1[1];
+            particle.y = -Math.sin(particle.fi*Math.PI/180)*particle.force+coords1[2];
+            particle.x = Math.cos(particle.fi2*Math.PI/180)*particle.dist+particle.x;
+            particle.y = Math.sin(particle.fi2*Math.PI/180)*particle.dist+particle.y;
+
+            particle.draw();
+            mbig.draw();
+
+            coords2[1]=particle.x;
+            coords2[2]=particle.y;
+
+            if(coords2[1]>=coords1[1] && coords2[2] >= coords1[2]){
+                particle.fi2 = Math.atan((coords2[2]-coords1[2])/(coords2[1]-coords1[1]))*(180/Math.PI);
+           }
+            else if(coords2[1]<=coords1[1] && coords2[2] >= coords1[2]){
+                particle.fi2 = 180-Math.atan((coords2[2]-coords1[2])/(coords1[1]-coords2[1]))*(180/Math.PI);
+            }
+            else if(coords2[1]<=coords1[1] && coords2[2] <= coords1[2]){
+                particle.fi2 = Math.atan((coords1[2]-coords2[2])/(coords1[1]-coords2[1]))*(180/Math.PI)+180;
+            }
+            else if(coords2[1]>=coords1[1] && coords2[2] <= coords1[2]){
+                particle.fi2 = 360-Math.atan((coords1[2]-coords2[2])/(coords2[1]-coords1[1]))*(180/Math.PI);
+            }
+            particle.dist = Math.sqrt((coords1[1]-coords2[1])*(coords1[1]-coords2[1])+(coords1[2]-coords2[2])*(coords1[2]-coords2[2]));
+            var int = requestAnimationFrame(move);
+        };
+        move();
+        //setInterval(move,15);
+        document.getElementById('canv').addEventListener('mousedown',coord); 
+    </script>
+</body>
+</html>
