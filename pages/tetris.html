@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+    <link rel="shortcut icon" href="../images/portlogo.png">
+    <link rel="stylesheet" href="../styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+    </style>
+</head>
+
+<body id="body">
+    <h1 style="text-align: center;">Tetris</h1>
+    <p style="text-align: center;">Press left arrow or right arrow to move left/right. Press up arrow to rotate.</p>
+    <main style="display: flex; justify-content: center; width: 100%;">
+        <canvas id="myCanvas">Canvas</canvas>
+    </main>
+    <div class="projects">
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="site.html">Website front page</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="doublependulum.html">Double Pendulum</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="fractaltree.html">Fractal Tree</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="flappybirdclone.html">Flappy Bird Clone</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="gravityattraction.html">Gravity force</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="solarsystem.html">Solar System</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="physicsforballs.html">Physics For Balls</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="raingenerator.html">Rain Generator</a></div>
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="snake.html">Snake Game</a></div>
+        </div>
+        <div class="subprojects">
+            <div class="subprojects2"><svg><rect height="" width=""></rect></svg><a href="../index.html">Home</a></div>
+        </div>
+    </div>
+    <script>
+        //for buttons
+        var arr2 = document.querySelectorAll('.subprojects2');
+
+        function smaller2() {
+            arr2.forEach(function (item) {
+                $(item).css('fontSize', '0.6em');
+            });
+        };
+
+        function normal2() {
+            arr2.forEach(function (item) {
+                $(item).css('fontSize', '1em');
+            });
+        };
+
+        function bigger() {
+            this.style.fontSize = '1.4em';
+        };
+
+        function over() {
+            $(this).stop(true, true).animate({
+                backgroundColor: '#f2f3f7'
+            }, 500);
+        }
+
+        function out() {
+            $(this).stop(true, true).animate({
+                backgroundColor: 'white'
+            }, 500);
+        }
+        for (i of arr2) {
+            i.addEventListener('mouseover', smaller2);
+            i.addEventListener('mouseover', bigger);
+            i.addEventListener('mouseover', over);
+            i.addEventListener('mouseout', normal2);
+            i.addEventListener('mouseout', out);
+        };
+
+        //program
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var wid = 20;
+        var hei = 20;
+        var W = wid * 10;
+        var H = hei * 40;
+        var speed = 20;
+        canvas.width = W;
+        canvas.height = H;
+        var blocks = [];
+        var type1 = [
+            [20, 0],
+            [40, 0],
+            [60, 0],
+            [80, 0]
+        ];
+        var type2 = [
+            [20, 0],
+            [40, 0],
+            [60, 0],
+            [60, 20]
+        ];
+        var type3 = [
+            [20, 0],
+            [40, 0],
+            [40, 20],
+            [20, 20]
+        ];
+        var type4 = [
+            [20, 0],
+            [0, 20],
+            [20, 20],
+            [40, 20]
+        ];
+        var type5 = [
+            [20, 0],
+            [20, 20],
+            [40, 20],
+            [40, 40]
+        ];
+        var colors = ['orange', 'red', 'blue', 'green'];
+        var types = [type1, type2, type3, type4, type5];
+        var Block = function (x, y, indic, color, rotType) {
+            this.x = x;
+            this.y = y;
+            this.sizex = wid;
+            this.sizey = hei;
+            this.color = 'black';
+            this.indic = indic;
+            this.swit = 0;
+            this.swit2 = 1;
+            this.mark;
+            this.mark2 = 0;
+            this.speedbl = speed;
+            this.color = color;
+            this.rotType = rotType;
+        };
+        Block.prototype.draw = function () {
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.sizex, this.sizey);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+        };
+        Block.prototype.move = function () {
+            this.y += this.speedbl;
+        };
+        var blIndic = 0;
+        var colorNumber = 0;
+
+        function create() {
+            let rand = Math.floor(Math.random() * 5);
+            for (let i = 0; i < 4; i++) {
+                blocks.push(new Block(types[rand][i][0], types[rand][i][1], blIndic, colors[colorNumber], rand));
+                //blocks.push(new Block(types[3][i][0], types[3][i][1], blIndic));
+            }
+            blIndic++;
+            colorNumber++;
+            if (colorNumber > colors.length - 1) {
+                colorNumber = 0;
+            }
+        };
+        create();
+        var creatingVar;
+        var creatingVar2;
+        var mmm = 0;
+
+        function checkCollision() { //this function checks collision between all blocks.
+            var arg;
+            var arg2;
+            var blsize;
+            var indic2;
+            var indic3;
+            for (var u = 0; u < blocks.length; u++) {
+                if (blocks[u].swit === 1) {
+                    continue;
+                }
+                arg = blocks[u].y;
+                blsize = blocks[u].sizey;
+                arg2 = blocks[u].x;
+                indic2 = blocks[u].indic;
+                for (let i = 0; i < blocks.length; i++) {
+                    if ((arg + blsize) === blocks[i].y && arg2 === blocks[i].x && indic2 !== blocks[i].indic) {
+                        //alert('a');
+                        blocks[u].mark2 = 1;
+                        creatingVar2 = true;
+                        blocks[u].swit = 1;
+                        blocks[u].speedbl = 0;
+                        var typ1 = blocks[u].indic;
+                        for (let i = 0; i < blocks.length; i++) {
+                            if (blocks[i].indic === typ1) {
+                                blocks[i].speedbl = 0;
+                                blocks[i].swit = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        let rotateSwitch = 0;
+
+        function shift(e) { //this part is just for movement and control of blocks
+            let count = 0;
+            if (e.keyCode === 37) {
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].swit === 0) {
+                        if (blocks[i].x <= 0) {
+                            count++;
+                        }
+                    }
+                }
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].swit === 0 && count === 0) {
+                        blocks[i].x -= 20;
+                    }
+                }
+            }
+            if (e.keyCode === 39) {
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].swit === 0) {
+                        if ((blocks[i].x + blocks[i].sizex) >= W) {
+                            count++;
+                        }
+                    }
+                }
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].swit === 0 && count === 0) {
+                        blocks[i].x += 20;
+                    }
+                }
+            }
+            if (e.keyCode === 38) {
+                let rotateArr = [];
+                let rotateCount = 0;
+                /////////////////////////////////////////////////////////////////////////////
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].swit === 0 && blocks[i].mark2 === 0) {
+                        rotateArr[rotateCount] = i;
+                        rotateCount++;
+                    }
+                }
+                rotateArr.sort(function (a, b) {
+                    return a - b
+                });
+                /////////////////////////////////////////////////////////////////////////////
+                if (blocks[rotateArr[0]].rotType === 4 && rotateSwitch === 0) {
+                    blocks[rotateArr[0]].x -= 20;
+                    blocks[rotateArr[0]].y += 20;
+                    blocks[rotateArr[2]].x -= 20;
+                    blocks[rotateArr[2]].y -= 20;
+                    blocks[rotateArr[3]].y -= 40;
+                    rotateSwitch = 1;
+                } else if (blocks[rotateArr[0]].rotType === 4 && rotateSwitch === 1) {
+                    blocks[rotateArr[0]].x += 20;
+                    blocks[rotateArr[0]].y -= 20;
+                    blocks[rotateArr[2]].x += 20;
+                    blocks[rotateArr[2]].y += 20;
+                    blocks[rotateArr[3]].y += 40;
+                    rotateSwitch = 0;
+                }
+                /////////////////////////////////////////////////////////////////////////////
+                if (blocks[rotateArr[0]].rotType === 1 && rotateSwitch === 0) {
+                    blocks[rotateArr[0]].x -= 0;
+                    blocks[rotateArr[0]].y += 40;
+                    blocks[rotateArr[1]].x += 0;
+                    blocks[rotateArr[1]].y += 40;
+                    blocks[rotateArr[2]].x -= 20;
+                    blocks[rotateArr[2]].y += 20;
+                    blocks[rotateArr[3]].x -= 20;
+                    blocks[rotateArr[3]].y -= 20;
+                    rotateSwitch = 1;
+                } else if (blocks[rotateArr[0]].rotType === 1 && rotateSwitch === 1) {
+                    blocks[rotateArr[0]].x -= 0;
+                    blocks[rotateArr[0]].y -= 40;
+                    blocks[rotateArr[1]].x -= 20;
+                    blocks[rotateArr[1]].y -= 20;
+                    blocks[rotateArr[2]].x -= 0;
+                    blocks[rotateArr[2]].y += 0;
+                    blocks[rotateArr[3]].x += 20;
+                    blocks[rotateArr[3]].y += 20;
+                    rotateSwitch = 2;
+                } else if (blocks[rotateArr[0]].rotType === 1 && rotateSwitch === 2) {
+                    blocks[rotateArr[0]].x += 20;
+                    blocks[rotateArr[0]].y -= 0;
+                    blocks[rotateArr[1]].x -= 0;
+                    blocks[rotateArr[1]].y -= 20;
+                    blocks[rotateArr[2]].x -= 20;
+                    blocks[rotateArr[2]].y += 0;
+                    blocks[rotateArr[3]].x -= 40;
+                    blocks[rotateArr[3]].y += 20;
+                    rotateSwitch = 3;
+                } else if (blocks[rotateArr[0]].rotType === 1 && rotateSwitch === 3) {
+                    blocks[rotateArr[0]].x -= 20;
+                    blocks[rotateArr[0]].y -= 0;
+                    blocks[rotateArr[1]].x += 20;
+                    blocks[rotateArr[1]].y -= 0;
+                    blocks[rotateArr[2]].x += 40;
+                    blocks[rotateArr[2]].y -= 20;
+                    blocks[rotateArr[3]].x += 40;
+                    blocks[rotateArr[3]].y -= 20;
+                    rotateSwitch = 0;
+                }
+                /////////////////////////////////////////////////////////////////////////////
+                if (blocks[rotateArr[0]].rotType === 3 && rotateSwitch === 0) {
+                    blocks[rotateArr[0]].x -= 0;
+                    blocks[rotateArr[0]].y += 0;
+                    blocks[rotateArr[1]].x += 20;
+                    blocks[rotateArr[1]].y += 0;
+                    blocks[rotateArr[2]].x -= 0;
+                    blocks[rotateArr[2]].y += 20;
+                    blocks[rotateArr[3]].x -= 0;
+                    blocks[rotateArr[3]].y -= 0;
+                    rotateSwitch = 1;
+                } else if (blocks[rotateArr[0]].rotType === 3 && rotateSwitch === 1) {
+                    blocks[rotateArr[0]].x -= 20;
+                    blocks[rotateArr[0]].y += 20;
+                    blocks[rotateArr[1]].x -= 0;
+                    blocks[rotateArr[1]].y -= 0;
+                    blocks[rotateArr[2]].x += 20;
+                    blocks[rotateArr[2]].y -= 20;
+                    blocks[rotateArr[3]].x -= 20;
+                    blocks[rotateArr[3]].y += 20;
+                    rotateSwitch = 2;
+                } else if (blocks[rotateArr[0]].rotType === 3 && rotateSwitch === 2) {
+                    blocks[rotateArr[0]].x += 40;
+                    blocks[rotateArr[0]].y -= 20;
+                    blocks[rotateArr[1]].x += 20;
+                    blocks[rotateArr[1]].y -= 0;
+                    blocks[rotateArr[2]].x -= 0;
+                    blocks[rotateArr[2]].y += 20;
+                    blocks[rotateArr[3]].x -= 0;
+                    blocks[rotateArr[3]].y -= 20;
+                    rotateSwitch = 3;
+                } else if (blocks[rotateArr[0]].rotType === 3 && rotateSwitch === 3) {
+                    blocks[rotateArr[0]].x -= 20;
+                    blocks[rotateArr[0]].y -= 0;
+                    blocks[rotateArr[1]].x -= 40;
+                    blocks[rotateArr[1]].y -= 0;
+                    blocks[rotateArr[2]].x -= 20;
+                    blocks[rotateArr[2]].y -= 20;
+                    blocks[rotateArr[3]].x += 20;
+                    blocks[rotateArr[3]].y -= 0;
+                    rotateSwitch = 0;
+                }
+                /////////////////////////////////////////////////////////////////////////////
+                if (blocks[rotateArr[0]].rotType === 0 && rotateSwitch === 0) {
+                    blocks[rotateArr[0]].x += 40;
+                    blocks[rotateArr[0]].y -= 40;
+                    blocks[rotateArr[1]].x += 20;
+                    blocks[rotateArr[1]].y -= 20;
+                    blocks[rotateArr[2]].x -= 0;
+                    blocks[rotateArr[2]].y += 0;
+                    blocks[rotateArr[3]].x -= 20;
+                    blocks[rotateArr[3]].y += 20;
+                    rotateSwitch = 1;
+                } else if (blocks[rotateArr[0]].rotType === 0 && rotateSwitch === 1) {
+                    blocks[rotateArr[0]].x -= 40;
+                    blocks[rotateArr[0]].y += 40;
+                    blocks[rotateArr[1]].x -= 20;
+                    blocks[rotateArr[1]].y += 20;
+                    blocks[rotateArr[2]].x -= 0;
+                    blocks[rotateArr[2]].y += 0;
+                    blocks[rotateArr[3]].x += 20;
+                    blocks[rotateArr[3]].y -= 20;
+                    rotateSwitch = 0;
+                }
+            }
+        };
+
+        var xses = [0, 20, 40, 60, 80, 100, 120, 140, 160, 180];
+        var yses = [];
+        var counter = 0;
+        for (let i = 780; i > 0; i -= 20) {
+            yses[counter] = i;
+            counter++;
+        };
+        var tru = [];
+        var count = 0;
+        var yLevelMark;
+
+        function checkLineFill() { //this function checks if the like is folled with blocks and deletes them if the condition is met
+            for (let i = 0; i < yses.length; i++) {
+                var y = yses[i];
+                for (let i = 0; i < xses.length; i++) {
+                    var x = xses[i];
+                    for (let i = 0; i < blocks.length; i++) {
+                        if (blocks[i].swit === 1) {
+                            if (blocks[i].x === x && blocks[i].y === y) {
+                                blocks[i].swit2 = 0;
+                                blocks[i].mark = 1;
+                                tru[count] = 1;
+                                count++;
+                            }
+                        }
+                    }
+                }
+                if (tru.length < 10) {
+                    tru = [];
+                    count = 0;
+                    for (let i = 0; i < blocks.length; i++) {
+                        blocks[i].mark = 0;
+                    }
+                }
+                if (tru.length === 10) {
+                    break;
+                }
+            }
+            if (tru.length === 10) {
+                for (let i = blocks.length - 1; i >= 0; i--) {
+                    if (blocks[i].mark === 1 && blocks[i].swit === 1) {
+                        yLevelMark = blocks[i].y;
+                        blocks.splice(i, 1);
+                    }
+                }
+                for (let i = 0; i < blocks.length; i++) {
+                    if (blocks[i].y < yLevelMark && blocks[i].swit === 1) {
+                        blocks[i].y += 20;
+                        blocks[i].mark2 = 1;
+                    }
+                }
+                tru = [];
+                count = 0;
+                checkLineFill();
+            }
+        };
+
+        function update() {
+            let counter2 = 0;
+            checkCollision();
+            for (let i = 0; i < blocks.length; i++) { //this part checks if the blocks reach the bottom of a game area.
+                if ((blocks[i].y + blocks[i].sizey) >= H) {
+                    if (blocks[i].swit === 0) {
+                        creatingVar = true;
+                    }
+                    blocks[i].speedbl = 0;
+                    blocks[i].mark2 = 1;
+                    blocks[i].swit = 1;
+                    var typ = blocks[i].indic;
+                    for (let i = 0; i < blocks.length; i++) { //stops all other blocks with the same indicator.
+                        if (blocks[i].indic === typ) {
+                            blocks[i].speedbl = 0;
+                            blocks[i].swit = 1;
+                        }
+                    }
+                }
+            }
+            checkLineFill();
+
+            ctx.clearRect(0, 0, W, H);
+            for (let i = 0; i < blocks.length; i++) {
+                blocks[i].draw();
+                blocks[i].move();
+                if (blocks[i].swit === 1) {
+                    counter2++;
+                }
+                if (blocks[i].swit === 1 && blocks[i].y <= 0) {
+                    clearInterval(int);
+                }
+            }
+            if (creatingVar === true || creatingVar2 ===
+                true) { //creates a new block as soon as previous blocks reach bottom or other blocks.
+                if (counter2 === blocks.length) {
+                    create();
+                    rotateSwitch = 0;
+                }
+                creatingVar = false;
+                creatingVar2 = false;
+            }
+        };
+        document.addEventListener('keydown', shift);
+        var int = setInterval(update, 170);
+        //setInterval(create, 7000);
+    </script>
+</body>
+
+</html>
