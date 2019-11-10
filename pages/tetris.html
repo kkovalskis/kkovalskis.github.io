@@ -203,7 +203,7 @@
 
         function shift(e) { //this part is just for movement and control of blocks
             let count = 0;
-            if (e.keyCode === 37) {
+            if (e.keyCode === 65) {
                 for (let i = 0; i < blocks.length; i++) {
                     if (blocks[i].swit === 0) {
                         if (blocks[i].x <= 0) {
@@ -217,7 +217,7 @@
                     }
                 }
             }
-            if (e.keyCode === 39) {
+            if (e.keyCode === 68) {
                 for (let i = 0; i < blocks.length; i++) {
                     if (blocks[i].swit === 0) {
                         if ((blocks[i].x + blocks[i].sizex) >= W) {
@@ -231,7 +231,7 @@
                     }
                 }
             }
-            if (e.keyCode === 38) {
+            if (e.keyCode === 87) {
                 let rotateArr = [];
                 let rotateCount = 0;
                 /////////////////////////////////////////////////////////////////////////////
