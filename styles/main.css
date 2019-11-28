@@ -265,3 +265,6 @@ canvas{
     display: block;
     border: 1px solid grey;
 }
+.subprojects2>a{
+    color: rgb(103, 131, 255);
+}
